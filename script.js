@@ -1,6 +1,6 @@
-let encryptionKey; // Variable to store the encryption key globally
-let encryptionIV; // Variable to store the encryption IV globally
-let encryptedMetadata; // Variable to store the encrypted metadata globally
+let encryptionKey;
+let encryptionIV; 
+let encryptedMetadata; 
 
 function extractAndEncrypt() {
     const uploadInput = document.getElementById('uploadInput');
@@ -22,21 +22,19 @@ function extractAndEncrypt() {
             EXIF.getData(image, function () {
                 const metadata = EXIF.pretty(this);
 
-                // Generate a random 256-bit key
+                // 256-bit ključ
                 encryptionKey = CryptoJS.lib.WordArray.random(256 / 8);
 
-                // Generate a random 128-bit IV
+                // 128-bit IV
                 encryptionIV = CryptoJS.lib.WordArray.random(128 / 8);
 
-                // Use the key and IV for encryption
                 encryptedMetadata = metadata;
                 const encryptionAlgorithm = encryptionSelect.value;
                 if (encryptionAlgorithm === 'aes') {
                     encryptedMetadata = CryptoJS.AES.encrypt(metadata, encryptionKey, { iv: encryptionIV }).toString();
                 }
-                // Add more encryption algorithms as needed
 
-                alert('Metadata extracted and encrypted. You can now download the key and the encrypted metadata.');
+                alert('Metapodaci eksportovani i šifrovani.');
             });
         };
     };
@@ -51,7 +49,7 @@ function downloadKey() {
         keyLink.href = URL.createObjectURL(keyBlob);
         keyLink.click();
     } else {
-        alert('Please extract and encrypt metadata before downloading the key.');
+        alert('Prvo ekstraktuj i šifruj.');
     }
 }
 
@@ -62,7 +60,7 @@ function downloadMetadata() {
         metadataLink.href = URL.createObjectURL(metadataBlob);
         metadataLink.click();
     } else {
-        alert('Please extract and encrypt metadata before downloading the encrypted metadata.');
+        alert('Prvo ekstraktuj i šifruj.');
     }
 }
 
@@ -71,12 +69,12 @@ function decryptMetadata() {
     const decryptionOutput = document.getElementById('decryptionOutput');
 
     if (!encryptedMetadataInput.value) {
-        alert('Please enter the encrypted metadata.');
+        alert('Unesi šifrovane podatke.');
         return;
     }
 
     if (!encryptionKey || !encryptionIV) {
-        alert('Please extract and encrypt metadata before attempting decryption.');
+        alert('Prvo ekstraktuj i šifruj.');
         return;
     }
 
@@ -84,13 +82,13 @@ function decryptMetadata() {
     const ivString = inputLines[0];
     const encryptedData = inputLines.slice(1).join('\n');
 
-    // Convert IV string to WordArray
+    //IV to WordArray
     const iv = CryptoJS.enc.Hex.parse(ivString);
 
-    // Decrypt using the key and IV
+    // Dešifrovanje
     const decryptedBytes = CryptoJS.AES.decrypt(encryptedData, encryptionKey, { iv: iv });
     const decryptedMetadata = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
-    // Display the decrypted metadata
+    // Prikaz
     decryptionOutput.textContent = decryptedMetadata;
 }
