@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Metadata Encryption</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <input type="file" id="uploadInput" accept="image/*">
+        <button onclick="extractAndEncrypt()">Ekstraktuj i šifruj podatke</button>
+        <button onclick="downloadKey()">Prezmi ključ</button>
+        <button onclick="downloadMetadata()">Preuzmi šifrovane podatke</button>
+
+        <div class="form-group">
+            <label for="encryptionSelect">Algoritam</label>
+            <select id="encryptionSelect">
+                <option value="aes">AES</option>
+            </select>
+        </div>
+
+        <textarea id="encryptedMetadataInput" placeholder="Unesi šifrovane metapodatke."></textarea>
+        <button onclick="decryptMetadata()">Dešifruj metapodatke</button>
+        <div id="decryptionOutput"></div>
+
+        <a id="downloadLinkKey" style="display: none" download="encryption-key.txt"></a>
+        <a id="downloadLinkMetadata" style="display: none" download="encrypted-metadata.txt"></a>
+    </div>
+
+    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
+    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/enc-base64.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
