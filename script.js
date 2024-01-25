@@ -7,7 +7,7 @@ function extractAndEncrypt() {
     const encryptionSelect = document.getElementById('encryptionSelect');
 
     if (uploadInput.files.length === 0) {
-        alert('Please select an image file.');
+        alert('Ubacite sliku.');
         return;
     }
 
